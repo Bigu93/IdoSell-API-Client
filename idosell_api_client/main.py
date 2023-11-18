@@ -18,10 +18,8 @@ def main():
     product_json = product_client.get_product("28801-B")
     product_wrapper = JSONParser(product_json)
 
-    product_id = product_wrapper.get_product_id()
-    product_names = product_wrapper.get_descriptions("pol")
-
-    print(product_names)
+    product_info = product_wrapper.compile_all_data("pol")
+    print(product_info)
 
 
 if __name__ == "__main__":

@@ -9,7 +9,7 @@ class JSONParser:
         return [product.get("productId") for product in self.data.get("results", [])]
 
     def get_product_id(self):
-        return self.data["results"][0].get("productId")
+        return {"id": self.data["results"][0].get("productId")}
 
     def get_descriptions(self, lang_id=None):
         descriptions = {}
@@ -34,3 +34,20 @@ class JSONParser:
             "id": self.data["results"][0].get("categoryId"),
             "name": self.data["results"][0].get("categoryName"),
         }
+
+    def compile_all_data(self, lang_id=None):
+        product_id = self.get_product_id()
+        descriptions = json.loads(
+            self.get_descriptions(lang_id)
+        )  # Parse JSON string back to a dict
+        producer = self.get_producer()
+        category = self.get_category()
+
+        compiled_data = {
+            "productId": product_id,
+            "descriptions": descriptions,
+            "producer": producer,
+            "category": category,
+        }
+
+        return json.dumps(compiled_data, indent=4)
