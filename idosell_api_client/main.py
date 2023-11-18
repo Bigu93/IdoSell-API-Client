@@ -14,9 +14,7 @@ def main():
     product_client = ProductClient(BASE_URL, token)
 
     product_id = product_client.get_product("48")
-    if product_id:
-        product = product_client.get_product(product_id)
-        print("Product details:", product)
+    print("Product details:", product_id)
 
 
 if __name__ == "__main__":
