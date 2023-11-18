@@ -3,7 +3,7 @@ import json
 
 class JSONParser:
     def __init__(self, json_data):
-        self.data = json.load(json_data)
+        self.data = json_data
 
     def get_product_details(self, product_id):
         for product in self.data.get("results", []):
