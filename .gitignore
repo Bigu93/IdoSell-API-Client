@@ -161,3 +161,4 @@ cython_debug/
 =======
 venv/
 idosell_api_client/.env
+idosell_api_client/logs/api.log

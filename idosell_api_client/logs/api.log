@@ -1,6 +1,0 @@
-2023-11-18 20:51:20,033 - ProductClient - INFO - Sending GET request to https://butosklep.pl//products/48
-2023-11-18 20:51:20,770 - ProductClient - ERROR - Error in GET request to https://butosklep.pl//products/48: 404 Client Error: Not Found for url: https://butosklep.pl/return.php?status=404
-2023-11-18 20:54:06,602 - ProductClient - INFO - Sending GET request to https://butosklep.pl//api/admin/v1/products/products?productIds=48
-2023-11-18 20:54:07,091 - ProductClient - INFO - Response from https://butosklep.pl//api/admin/v1/products/products?productIds=48: 200
-2023-11-18 20:54:07,093 - ProductClient - INFO - Sending GET request to https://butosklep.pl//api/admin/v1/products/products?productIds={'resultsPage': 0, 'resultsLimit': 100, 'resultsNumberPage': 0, 'resultsNumberAll': 0, 'errors': {'faultCode': 2, 'faultString': 'Wyszukiwarka produktów: zwrócono pusty wynik'}, 'results': []}
-2023-11-18 20:54:07,476 - ProductClient - INFO - Response from https://butosklep.pl//api/admin/v1/products/products?productIds={'resultsPage': 0, 'resultsLimit': 100, 'resultsNumberPage': 0, 'resultsNumberAll': 0, 'errors': {'faultCode': 2, 'faultString': 'Wyszukiwarka produktów: zwrócono pusty wynik'}, 'results': []}: 200

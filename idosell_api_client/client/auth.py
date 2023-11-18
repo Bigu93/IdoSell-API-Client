@@ -1,6 +1,7 @@
 import requests
 import time
 import base64
+from exceptions.api_exceptions import APIError
 
 
 class Auth:
@@ -42,7 +43,7 @@ class Auth:
             self.token_expires = time.time() + int(data["expires_in"])
 
         except requests.RequestException as e:
-            # Handle various types of HTTP errors and exceptions
-            print(f"Error during authentication: {e}")
+            self.logger.error(f"Error in authentication request: {e}")
+            raise APIError(f"API Error: {e.response.status_code} - {e.response.text}")
             self.access_token = None
             self.token_expires = 0
