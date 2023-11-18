@@ -16,8 +16,8 @@ def main():
     product_client = ProductClient(BASE_URL, token)
 
     product_id = product_client.get_product("48-B")
-    product_details = JSONParser(product_id)
-    print(product_details.get_all_product_ids())
+    product_details = JSONParser(product_id).get_product_details("48-B")
+    print(product_details)
 
 
 if __name__ == "__main__":
