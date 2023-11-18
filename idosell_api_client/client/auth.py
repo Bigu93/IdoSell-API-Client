@@ -1,14 +1,6 @@
 import requests
 import time
 import base64
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-client_username = os.getenv("IDOSELL_CLIENT_USERNAME")
-client_secret = os.getenv("IDOSELL_CLIENT_SECRET")
-base_url = os.getenv("IDOSELL_BASE_URL")
 
 
 class Auth:
@@ -18,6 +10,11 @@ class Auth:
         self.base_url = base_url
         self.access_token = None
         self.token_expires = 0
+
+    def get_basic_auth_header(self):
+        credentials = f"{self.client_username}:{self.client_secret}"
+        encoded_credentials = base64.b64encode(credentials.encode()).decode()
+        return f"Basic {encoded_credentials}"
 
     def is_token_valid(self):
         return self.access_token and time.time() < self.token_expires
