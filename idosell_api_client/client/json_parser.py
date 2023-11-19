@@ -35,7 +35,7 @@ class JSONParser:
             "name": self.data["results"][0].get("categoryName"),
         }
 
-    def compile_all_data(self, lang_id=None):
+    def all_data(self, lang_id=None):
         product_id = self.get_product_id()
         descriptions = json.loads(
             self.get_descriptions(lang_id)
