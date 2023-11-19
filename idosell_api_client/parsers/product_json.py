@@ -75,3 +75,4 @@ class ProductJSONParser(BaseJSONParser):
             return self.error_message
 
         return self.data["results"][0].get("productNote")
+    
