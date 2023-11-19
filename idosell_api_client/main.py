@@ -19,9 +19,9 @@ def main():
     sku_client = SKUClient(BASE_URL, token)
 
     product_json = sku_client.get_product("28801")
-    product_wrapper = ProductJSONParser(product_json)
+    product_wrapper = SKUJSONParser(product_json)
 
-    product_info = product_wrapper.parse("spa")
+    product_info = product_wrapper.parse()
     print(product_info)
 
 

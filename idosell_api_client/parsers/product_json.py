@@ -23,9 +23,6 @@ class ProductJSONParser(BaseJSONParser):
     def get_all_product_ids(self):
         return [product.get("productId") for product in self.data.get("results", [])]
 
-    def get_product_id(self):
-        return {"id": self.data["results"][0].get("productId")}
-
     def get_descriptions(self, lang_id=None):
         descriptions = {}
         for description in self.data["results"][0].get(

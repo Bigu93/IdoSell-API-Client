@@ -15,5 +15,8 @@ class BaseJSONParser:
         if fault_code != 0 or fault_string:
             raise APIError(fault_string, fault_code)
 
+    def get_product_id(self):
+        return {"id": self.data["results"][0].get("productId")}
+
     def parse(self):
         raise NotImplementedError("This method should be implemented in a subclass")
