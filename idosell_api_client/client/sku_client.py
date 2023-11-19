@@ -1,4 +1,5 @@
 from .base_client import BaseClient
+from parsers.sku_json import SKUJSONParser
 
 
 class SKUClient(BaseClient):
@@ -6,6 +7,8 @@ class SKUClient(BaseClient):
         super().__init__(base_url, auth_token)
 
     def get_product(self, product_id):
-        return self.get(
+        response = self.get(
             f"api/admin/v1/products/SKUbyBarcode?productIndices={product_id}"
         )
+        parser = SKUJSONParser(response)
+        return parser.parse()
