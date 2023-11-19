@@ -1,3 +1,7 @@
+import json
+from .base_json import BaseJSONParser
+
+
 class ProductJSONParser(BaseJSONParser):
     def parse(self, lang_id=None):
         product_id = self.get_product_id()
@@ -7,12 +11,14 @@ class ProductJSONParser(BaseJSONParser):
         producer = self.get_producer()
         category = self.get_category()
 
-        return {
+        data = {
             "product_id": product_id,
             "descriptions": descriptions,
             "producer": producer,
             "category": category,
         }
+
+        return json.dumps(data, indent=4)
 
     def get_all_product_ids(self):
         return [product.get("productId") for product in self.data.get("results", [])]
