@@ -23,10 +23,10 @@ class BaseJSONParser:
 
         return {"error": False}
 
-    def get_product_id(self):
+    def _get_product_id(self):
         if self.has_error:
             return self.error_message  # Return the error message or simply return None
-        return {"id": self.data["results"][0].get("productId")}
+        return self.data["results"][0].get("productId")
 
     def parse(self):
         raise NotImplementedError("This method should be implemented in a subclass")

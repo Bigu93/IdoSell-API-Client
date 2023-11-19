@@ -16,10 +16,10 @@ def main():
     product_client = ProductClient(BASE_URL, token)
     sku_client = SKUClient(BASE_URL, token)
 
-    product_json = product_client.get_product("28801-B", "pol")
-    sku_json = sku_client.get_product("28801-B")
+    product_json = product_client.get_product("28801-B", ["pol", "spa"])
+    sku_json = sku_client.get_product("28401-21")
 
-    print(product_json)
+    # print(product_json)
     print(sku_json)
 
 
