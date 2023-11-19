@@ -16,6 +16,7 @@ class SKUJSONParser(BaseJSONParser):
         icons = self._get_product_icons()
 
         data = {
+            "error": False,
             "id": product_id,
             "name": name,
             "size": size,

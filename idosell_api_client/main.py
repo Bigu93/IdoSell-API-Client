@@ -21,7 +21,7 @@ def main():
     # product_json = product_client.get_product("28801-B", ["pol", "spa"])
     # sku_json = sku_client.get_product("28401-21")
     size_chart_json = size_chart_client.get_size_chart(
-        "36-23/37-23,5/38-24/39-24,5/40-25/41-25,5"
+        "36-23,5/37-24/38-24,5/39-25/40-25,5/41-26"
     )
 
     # print(product_json)
