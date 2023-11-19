@@ -1,4 +1,3 @@
-import json
 from client.product_client import ProductClient
 from client.sku_client import SKUClient
 from client.size_chart_client import SizeChartClient
