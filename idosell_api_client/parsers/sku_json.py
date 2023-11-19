@@ -1,5 +1,6 @@
 import json
 from .base_json import BaseJSONParser
+from config.settings import STOCK_IDS
 
 
 class SKUJSONParser(BaseJSONParser):
@@ -8,14 +9,14 @@ class SKUJSONParser(BaseJSONParser):
         name = self._get_name()
         producer_code = self._get_producer_code()
         weight = self._get_weight()
-        quantity = self._get_stock_quantities()
+        stock_quantities = self._get_stock_quantities()
 
         data = {
             "id": product_id,
             "name": name,
             "producer_code": producer_code,
             "weight": weight,
-            "quantity": quantity,
+            "stock_quantities": stock_quantities,
         }
         return json.dumps(data, indent=4)
 
@@ -52,7 +53,8 @@ class SKUJSONParser(BaseJSONParser):
         for item in self.data["results"][0]["productSkuList"][0].get("quantities", []):
             stock_id = item.get("stockId")
             quantity = item.get("quantity")
-            quantities.append({"stock_id": stock_id, "quantity": quantity})
+            stock_name = STOCK_IDS.get(str(stock_id), "Nieznany")
+            quantities.append({"stock_name": stock_name, "quantity": quantity})
         return quantities
 
     def _get_data(self):
