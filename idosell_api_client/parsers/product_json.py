@@ -10,6 +10,8 @@ class ProductJSONParser(BaseJSONParser):
         )  # Parse JSON string back to a dict
         producer = self._get_producer()
         category = self._get_category()
+        displayed_code = self._get_displayed_code()
+        product_note = self._get_product_note()
 
         data = {
             "error": False,
@@ -17,6 +19,8 @@ class ProductJSONParser(BaseJSONParser):
             "descriptions": descriptions,
             "producer": producer,
             "category": category,
+            "displayed_code": displayed_code,
+            "product_note": product_note,
         }
 
         return json.dumps(data, indent=4)
@@ -59,3 +63,15 @@ class ProductJSONParser(BaseJSONParser):
         return self.data["results"][0].get("categoryId"), self.data["results"][0].get(
             "categoryName"
         )
+
+    def _get_displayed_code(self):
+        if self.has_error:
+            return self.error_message
+
+        return self.data["results"][0].get("productDisplayedCode")
+
+    def _get_product_note(self):
+        if self.has_error:
+            return self.error_message
+
+        return self.data["results"][0].get("productNote")
