@@ -25,7 +25,8 @@ class BaseJSONParser:
 
     def _get_product_id(self):
         if self.has_error:
-            return self.error_message  # Return the error message or simply return None
+            return self.error_message
+
         return self.data["results"][0].get("productId")
 
     def parse(self):

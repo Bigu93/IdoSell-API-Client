@@ -40,7 +40,9 @@ class SizeChartJSONParser(BaseJSONParser):
     def _get_size_chart(self):
         if self.has_error:
             return self.error_message
+
         size_charts = list(self.data["sizeCharts"].values())
+
         return size_charts[0].get("nameInPanel", None)
 
     def _get_size_chart_values(self, size_chart_name):
