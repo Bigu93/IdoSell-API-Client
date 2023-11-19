@@ -1,7 +1,3 @@
-import json
-from exceptions.api_exceptions import APIError
-
-
 class BaseJSONParser:
     def __init__(self, json_data):
         self.data = json_data
