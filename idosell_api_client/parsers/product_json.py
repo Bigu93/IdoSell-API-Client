@@ -1,5 +1,6 @@
 import json
 from .base_json import BaseJSONParser
+from .size_chart_json import SizeChartJSONParser
 
 
 class ProductJSONParser(BaseJSONParser):
@@ -12,15 +13,20 @@ class ProductJSONParser(BaseJSONParser):
         category = self._get_category()
         displayed_code = self._get_displayed_code()
         product_note = self._get_product_note()
+        size_chart_name, size_chart = self._get_size_chart()
+        sizes = self._get_sizes()
 
         data = {
             "error": False,
             "product_id": product_id,
-            "descriptions": descriptions,
-            "producer": producer,
-            "category": category,
             "displayed_code": displayed_code,
+            "category": category,
             "product_note": product_note,
+            "producer": producer,
+            "sizes": sizes,
+            "size_chart_name": size_chart_name,
+            "size_chart": size_chart,
+            "descriptions": descriptions,
         }
 
         return json.dumps(data, indent=4)
@@ -75,4 +81,21 @@ class ProductJSONParser(BaseJSONParser):
             return self.error_message
 
         return self.data["results"][0].get("productNote")
-    
+
+    def _get_size_chart(self):
+        if self.has_error:
+            return self.error_message
+
+        size_chart_name = self.data["results"][0].get("sizeChartName")
+        size_chart = SizeChartJSONParser.get_size_chart_values(size_chart_name)
+
+        return size_chart_name, size_chart
+
+    def _get_sizes(self):
+        if self.has_error:
+            return self.error_message
+
+        sizes = self.data["results"][0].get("productSizes")
+        data = [size.get("sizePanelName") for size in sizes]
+
+        return data

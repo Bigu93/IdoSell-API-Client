@@ -6,7 +6,7 @@ class SizeChartJSONParser(BaseJSONParser):
     def parse(self, name):
         panel_name = self._get_size_chart()
         if panel_name == name:
-            size_chart_values = self._get_size_chart_values(panel_name)
+            size_chart_values = self.get_size_chart_values(panel_name)
             data = {
                 "error": False,
                 "message": "Size chart found",
@@ -45,7 +45,8 @@ class SizeChartJSONParser(BaseJSONParser):
 
         return size_charts[0].get("nameInPanel", None)
 
-    def _get_size_chart_values(self, size_chart_name):
+    @staticmethod
+    def get_size_chart_values(size_chart_name):
         if not size_chart_name or not isinstance(size_chart_name, str):
             raise ValueError("Invalid chart string format.")
 

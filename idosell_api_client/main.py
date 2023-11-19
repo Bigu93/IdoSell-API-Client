@@ -17,7 +17,7 @@ def main():
     # sku_client = SKUClient(BASE_URL, token)
     # size_chart_client = SizeChartClient(BASE_URL, token)
 
-    product_json = product_client.get_product("28801-B", ["pol", "spa"])
+    product_json = product_client.get_product("28801-B", "pol")
     # sku_json = sku_client.get_product("28401-21")
     # size_chart_json = size_chart_client.get_size_chart(
     #    "36-23,5/37-24/38-24,5/39-25/40-25,5/41-26"
