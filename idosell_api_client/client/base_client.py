@@ -44,8 +44,17 @@ class BaseClient:
                 self.logger.info(f"Raw response from {url}: {response.text}")
                 return response.text
         except requests.exceptions.HTTPError as e:
-            self.logger.error(f"Error in {method} request to {url}: {e}")
-            raise APIError(f"API Error: {e.response.status_code} - {e.response.text}")
+            status_code = e.response.status_code
+            if status_code == 404:
+                error_message = "Resource not found"
+            elif status_code == 401:
+                error_message = "Unauthorized access"
+            elif status_code == 500:
+                error_message = "Internal server error"
+            else:
+                error_message = f"HTTP Error: {status_code}"
+            self.logger.error(f"Error in {method} request to {url}: {error_message}")
+            raise APIError(f"API Error: {status_code} - {error_message}")
         except requests.exceptions.Timeout as e:
             self.logger.error(f"Request to {url} timed out: {e}")
             raise APIError("Request timed out")

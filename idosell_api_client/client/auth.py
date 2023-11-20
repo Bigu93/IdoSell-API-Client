@@ -6,6 +6,8 @@ from exceptions.api_exceptions import APIError
 
 
 class Auth:
+    BUFFER_TIME = 60  # seconds
+
     def __init__(self, client_username, client_secret, base_url):
         self.logger = get_logger(self.__class__.__name__)
         self.encoded_credentials = self.encode_credentials(
@@ -24,7 +26,9 @@ class Auth:
         return f"Basic {self.encoded_credentials}"
 
     def is_token_valid(self):
-        return self.access_token and time.time() < self.token_expires
+        return self.access_token and time.time() < (
+            self.token_expires - self.BUFFER_TIME
+        )
 
     def get_token(self):
         if not self.is_token_valid():
