@@ -28,3 +28,5 @@ class ProductClient(BaseClient):
     def _validate_product_id(product_id):
         if not product_id:
             raise ValueError("Product ID cannot be empty")
+        if not isinstance(product_id, str):
+            raise ValueError("Product ID must be a string")
