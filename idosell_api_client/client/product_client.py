@@ -7,6 +7,7 @@ class ProductClient(BaseClient):
         super().__init__(base_url, auth_token)
 
     def get_product(self, product_id, lang_id=None):
+        self._validate_product_id(product_id)
         response = self.get(f"api/admin/v1/products/products?productIds={product_id}")
         parser = ProductJSONParser(response)
         return parser.parse(lang_id)
@@ -22,3 +23,8 @@ class ProductClient(BaseClient):
     def delete_product(self, product_id):
         # TODO - implement product data validation
         return self.delete(f"products/{product_id}")
+
+    @staticmethod
+    def _validate_product_id(product_id):
+        if not product_id:
+            raise ValueError("Product ID cannot be empty")
