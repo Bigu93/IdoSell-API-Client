@@ -9,11 +9,4 @@ BASE_URL = os.getenv("IDOSELL_BASE_URL")
 
 LOG_LEVEL = os.getenv("LOG_LEVEL", "DEBUG").upper()
 
-STOCK_IDS = {
-    "1": "HALA",
-    "2": "PALETOWY",
-    "6": "SKLEP",
-    "9": "BABIAK",
-    "10": "ZWROTY LINDA",
-    "11": "ZWROTY HALA",
-}
+STOCK_IDS = dict(item.split(":") for item in os.getenv("STOCK_IDS").split(","))
