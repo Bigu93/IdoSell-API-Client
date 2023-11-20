@@ -1,21 +1,27 @@
 import requests
 import time
 import base64
+from logs.logger import get_logger
 from exceptions.api_exceptions import APIError
 
 
 class Auth:
     def __init__(self, client_username, client_secret, base_url):
-        self.client_username = client_username
-        self.client_secret = client_secret
+        self.logger = get_logger(self.__class__.__name__)
+        self.encoded_credentials = self.encode_credentials(
+            client_username, client_secret
+        )
         self.base_url = base_url
         self.access_token = None
         self.token_expires = 0
 
+    @staticmethod
+    def encode_credentials(client_username, client_secret):
+        credentials = f"{client_username}:{client_secret}"
+        return base64.b64encode(credentials.encode()).decode()
+
     def get_basic_auth_header(self):
-        credentials = f"{self.client_username}:{self.client_secret}"
-        encoded_credentials = base64.b64encode(credentials.encode()).decode()
-        return f"Basic {encoded_credentials}"
+        return f"Basic {self.encoded_credentials}"
 
     def is_token_valid(self):
         return self.access_token and time.time() < self.token_expires

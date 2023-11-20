@@ -4,6 +4,8 @@ from logs.logger import get_logger
 
 
 class BaseClient:
+    DEFAULT_TIMEOUT = 10  # seconds
+
     def __init__(self, base_url, auth_token):
         self.logger = get_logger(self.__class__.__name__)
         self.base_url = base_url
@@ -26,10 +28,24 @@ class BaseClient:
         url = f"{self.base_url}/{endpoint}"
         self.logger.info(f"Sending {method} request to {url}")
         try:
-            response = requests.request(method, url, headers=self.headers, **kwargs)
+            response = requests.request(
+                method,
+                url,
+                headers=self.headers,
+                timeout=self.DEFAULT_TIMEOUT,
+                **kwargs,
+            )
             response.raise_for_status()
-            self.logger.info(f"Response from {url}: {response.status_code}")
-            return response.json()
+
+            if "application/json" in response.headers.get("Content-Type", ""):
+                self.logger.info(f"Response from {url}: {response.status_code}")
+                return response.json()
+            else:
+                self.logger.info(f"Raw response from {url}: {response.text}")
+                return response.text
         except requests.exceptions.HTTPError as e:
             self.logger.error(f"Error in {method} request to {url}: {e}")
             raise APIError(f"API Error: {e.response.status_code} - {e.response.text}")
+        except requests.exceptions.Timeout as e:
+            self.logger.error(f"Request to {url} timed out: {e}")
+            raise APIError("Request timed out")
