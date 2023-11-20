@@ -45,10 +45,16 @@ class BaseClient:
                 return response.text
         except requests.exceptions.HTTPError as e:
             status_code = e.response.status_code
-            if status_code == 404:
-                error_message = "Resource not found"
-            elif status_code == 401:
+            if status_code == 401:
                 error_message = "Unauthorized access"
+            elif status_code == 403:
+                error_message = "Access denied"
+            elif status_code == 404:
+                error_message = "Not found"
+            elif status_code == 422:
+                error_message = "Invalid data format"
+            elif status_code == 429:
+                error_message = "Too many requests"
             elif status_code == 500:
                 error_message = "Internal server error"
             else:
