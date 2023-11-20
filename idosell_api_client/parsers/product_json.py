@@ -4,7 +4,16 @@ from .size_chart_json import SizeChartJSONParser
 
 
 class ProductJSONParser(BaseJSONParser):
+    def error_check(func):
+        def wrapper(self, *args, **kwargs):
+            if self.has_error:
+                return self.error_message
+            return func(self, *args, **kwargs)
+
+        return wrapper
+
     def parse(self, lang_ids=None):
+        self._validate_lang_ids(lang_ids)
         product_id = self._get_product_id()
         descriptions = json.loads(
             self._get_descriptions(lang_ids)
@@ -31,12 +40,23 @@ class ProductJSONParser(BaseJSONParser):
 
         return json.dumps(data, indent=4)
 
+    @staticmethod
+    def _validate_lang_ids(lang_ids):
+        if lang_ids is not None:
+            if not isinstance(lang_ids, list):
+                raise ValueError("Lang IDs must be a list")
+            for lang_id in lang_ids:
+                if not isinstance(lang_id, str):
+                    raise ValueError("Lang IDs must be strings")
+
+    @error_check
     def _get_all_product_ids(self):
         if self.has_error:
             return self.error_message
 
         return [product.get("productId") for product in self.data.get("results", [])]
 
+    @error_check
     def _get_descriptions(self, lang_ids=None):
         if self.has_error:
             return self.error_message
@@ -54,6 +74,7 @@ class ProductJSONParser(BaseJSONParser):
 
         return json.dumps(descriptions, indent=4)
 
+    @error_check
     def _get_producer(self):
         if self.has_error:
             return self.error_message
@@ -62,6 +83,7 @@ class ProductJSONParser(BaseJSONParser):
             "producerName"
         )
 
+    @error_check
     def _get_category(self):
         if self.has_error:
             return self.error_message
@@ -70,18 +92,21 @@ class ProductJSONParser(BaseJSONParser):
             "categoryName"
         )
 
+    @error_check
     def _get_displayed_code(self):
         if self.has_error:
             return self.error_message
 
         return self.data["results"][0].get("productDisplayedCode")
 
+    @error_check
     def _get_product_note(self):
         if self.has_error:
             return self.error_message
 
         return self.data["results"][0].get("productNote")
 
+    @error_check
     def _get_size_chart(self):
         if self.has_error:
             return self.error_message
@@ -91,6 +116,7 @@ class ProductJSONParser(BaseJSONParser):
 
         return size_chart_name, size_chart
 
+    @error_check
     def _get_sizes(self):
         if self.has_error:
             return self.error_message
