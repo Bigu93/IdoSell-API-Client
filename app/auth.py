@@ -4,7 +4,7 @@ from flask import (
     redirect,
     url_for,
     request,
-    flask_sqlalchemy,
+    flash,
 )
 from werkzeug.security import generate_password_hash, check_password_hash
 from .models import User
