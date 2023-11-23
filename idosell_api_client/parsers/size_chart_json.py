@@ -3,6 +3,9 @@ from .base_json import BaseJSON, error_check
 
 
 class SizeChartJSON(BaseJSON):
+    def __init__(self, json_data):
+        super().__init__(json_data, result_key="sizeCharts")
+
     @error_check
     def parse(self, name):
         panel_name = self._get_size_chart()
@@ -24,8 +27,7 @@ class SizeChartJSON(BaseJSON):
         return json.dumps(data, indent=4)
 
     def _get_size_chart(self):
-        size_charts = list(self.data["sizeCharts"].values())
-
+        size_charts = list(self.data[self.result_key].values())
         return size_charts[0].get("nameInPanel", None)
 
     @staticmethod

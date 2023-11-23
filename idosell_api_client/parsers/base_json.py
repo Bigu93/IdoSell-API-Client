@@ -8,8 +8,9 @@ def error_check(func):
 
 
 class BaseJSON:
-    def __init__(self, json_data):
+    def __init__(self, json_data, result_key="results"):
         self.data = json_data
+        self.result_key = result_key
         self.has_error = False  # Instance variable to track if an error occurred
         self.error_message = self.check_for_errors()
 
@@ -22,9 +23,13 @@ class BaseJSON:
             self.has_error = True
             return {"error": True, "message": fault_string, "code": fault_code}
 
-        if not self.data.get("results"):
+        if not self.data.get(self.result_key):
             self.has_error = True
-            return {"error": True, "message": "No results found", "code": -1}
+            return {
+                "error": True,
+                "message": f"{self.result_key.capitalize()} not found",
+                "code": -1,
+            }
 
         return {"error": False}
 

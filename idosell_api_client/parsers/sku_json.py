@@ -4,6 +4,9 @@ from config.settings import STOCK_IDS
 
 
 class SkuJSON(BaseJSON):
+    def __init__(self, json_data):
+        super().__init__(json_data)
+
     @error_check
     def parse(self):
         product_id = self._get_product_id()

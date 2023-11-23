@@ -4,31 +4,34 @@ from .size_chart_json import SizeChartJSON
 
 
 class ProductJSON(BaseJSON):
-    @error_check
-    def parse(self, lang_ids=None):
-        self._validate_lang_ids(lang_ids)
-        product_id = self._get_product_id()
-        descriptions = json.loads(
-            self._get_descriptions(lang_ids)
-        )  # Parse JSON string back to a dict
-        producer = self._get_producer()
-        category = self._get_category()
-        displayed_code = self._get_displayed_code()
-        product_note = self._get_product_note()
-        size_chart_name, size_chart = self._get_size_chart()
-        sizes = self._get_sizes()
+    def __init__(self, json_data, lang_ids=None):
+        super().__init__(json_data)
+        if not self.has_error:
+            self._validate_lang_ids(lang_ids)
+            self.product_id = self._get_product_id()
+            self.descriptions = self._get_descriptions(lang_ids)
+            self.producer = self._get_producer()
+            self.category = self._get_category()
+            self.displayed_code = self._get_displayed_code()
+            self.product_note = self._get_product_note()
+            self.size_chart_name, self.size_chart = self._get_size_chart()
+            self.sizes = self._get_sizes()
+        else:
+            self.error_message
 
+    @error_check
+    def parse(self):
         data = {
             "error": False,
-            "product_id": product_id,
-            "displayed_code": displayed_code,
-            "category": category,
-            "product_note": product_note,
-            "producer": producer,
-            "sizes": sizes,
-            "size_chart_name": size_chart_name,
-            "size_chart": size_chart,
-            "descriptions": descriptions,
+            "product_id": self.product_id,
+            "displayed_code": self.displayed_code,
+            "category": self.category,
+            "product_note": self.product_note,
+            "producer": self.producer,
+            "sizes": self.sizes,
+            "size_chart_name": self.size_chart_name,
+            "size_chart": self.size_chart,
+            "descriptions": self.descriptions,
         }
 
         return json.dumps(data, indent=4)
@@ -60,7 +63,7 @@ class ProductJSON(BaseJSON):
                     "productLongDescription": description.get("productLongDescription"),
                 }
 
-        return json.dumps(descriptions, indent=4)
+        return descriptions
 
     def _get_producer(self):
         return self.data["results"][0].get("producerId"), self.data["results"][0].get(
