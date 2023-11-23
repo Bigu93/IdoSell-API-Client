@@ -1,9 +1,10 @@
 import json
-from .base_json import BaseJSONParser
+from .base_json import BaseJSON, error_check
 from config.settings import STOCK_IDS
 
 
-class SKUJSONParser(BaseJSONParser):
+class SkuJSON(BaseJSON):
+    @error_check
     def parse(self):
         product_id = self._get_product_id()
         name = self._get_name().strip()
@@ -30,28 +31,18 @@ class SKUJSONParser(BaseJSONParser):
         return json.dumps(data, indent=4)
 
     def _get_product_id(self):
-        if self.has_error:
-            return self.error_message
         return self.data["results"][0]["productSkuList"][0].get("productId")
 
     def _get_name(self):
-        if self.has_error:
-            return self.error_message
         return self.data["results"][0]["productSkuList"][0].get("productName")
 
     def _get_size(self):
-        if self.has_error:
-            return self.error_message
         return self.data["results"][0]["productSkuList"][0].get("sizeName")
 
     def _get_producer_code(self):
-        if self.has_error:
-            return self.error_message
         return self.data["results"][0]["productSkuList"][0].get("codeProducer")
 
     def _get_weight(self):
-        if self.has_error:
-            return self.error_message
         weight = self.data["results"][0]["productSkuList"][0].get("weight")
         if weight != 0 or weight is not None:
             weight_kg = "{:.1f}".format(weight / 1000)
@@ -61,8 +52,6 @@ class SKUJSONParser(BaseJSONParser):
         ]
 
     def _get_stock_quantities(self):
-        if self.has_error:
-            return self.error_message
         quantities = []
         for item in self.data["results"][0]["productSkuList"][0].get("quantities", []):
             stock_id = item.get("stockId")
@@ -72,18 +61,12 @@ class SKUJSONParser(BaseJSONParser):
         return quantities
 
     def _get_producer_name(self):
-        if self.has_error:
-            return self.error_message
         return self.data["results"][0]["productSkuList"][0].get("producerName")
 
     def _get_product_note(self):
-        if self.has_error:
-            return self.error_message
         return self.data["results"][0]["productSkuList"][0].get("productNote")
 
     def _get_product_icons(self):
-        if self.has_error:
-            return self.error_message
         return {
             "small": self.data["results"][0]["productSkuList"][0]["productIcon"][
                 "productIconSmallUrl"

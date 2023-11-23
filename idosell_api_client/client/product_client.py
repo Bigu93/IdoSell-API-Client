@@ -1,5 +1,5 @@
 from .base_client import BaseClient
-from parsers.product_json import ProductJSONParser
+from parsers.product_json import ProductJSON
 
 
 class ProductClient(BaseClient):
@@ -9,7 +9,7 @@ class ProductClient(BaseClient):
     def get_product(self, product_id, lang_id=None):
         self._validate_product_id(product_id)
         response = self.get(f"api/admin/v1/products/products?productIds={product_id}")
-        parser = ProductJSONParser(response)
+        parser = ProductJSON(response)
         return parser.parse(lang_id)
 
     def add_product(self, product_data):

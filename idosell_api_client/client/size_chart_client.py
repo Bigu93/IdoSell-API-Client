@@ -1,5 +1,5 @@
 from .base_client import BaseClient
-from parsers.size_chart_json import SizeChartJSONParser
+from parsers.size_chart_json import SizeChartJSON
 
 
 class SizeChartClient(BaseClient):
@@ -10,5 +10,5 @@ class SizeChartClient(BaseClient):
         response = self.get(
             f"api/admin/v1/sizecharts/sizecharts?names={size_chart_name}"
         )
-        parser = SizeChartJSONParser(response)
+        parser = SizeChartJSON(response)
         return parser.parse(size_chart_name)

@@ -1,5 +1,5 @@
 from .base_client import BaseClient
-from parsers.sku_json import SKUJSONParser
+from parsers.sku_json import SkuJSON
 
 
 class SKUClient(BaseClient):
@@ -10,5 +10,5 @@ class SKUClient(BaseClient):
         response = self.get(
             f"api/admin/v1/products/SKUbyBarcode?productIndices={product_id}"
         )
-        parser = SKUJSONParser(response)
+        parser = SkuJSON(response)
         return parser.parse()
