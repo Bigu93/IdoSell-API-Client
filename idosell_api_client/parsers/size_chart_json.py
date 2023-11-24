@@ -3,28 +3,29 @@ from .base_json import BaseJSON, error_check
 
 
 class SizeChartJSON(BaseJSON):
-    def __init__(self, json_data):
+    def __init__(self, json_data, name):
         super().__init__(json_data, result_key="sizeCharts")
+        self.name = name
 
     @error_check
-    def parse(self, name):
+    def parse(self):
         panel_name = self._get_size_chart()
-        if panel_name == name:
+        if panel_name == self.name:
             size_chart_values = self.get_size_chart_values(panel_name)
-            data = {
+            self.parsed_data = {
                 "error": False,
                 "message": "Size chart found",
                 "size_chart_name": panel_name,
                 "size_chart_values": size_chart_values,
             }
         else:
-            data = {
+            self.parsed_data = {
                 "error": True,
                 "message": "Size chart not found",
                 "size_chart_name": None,
             }
 
-        return json.dumps(data, indent=4)
+        return self.parsed_data
 
     def _get_size_chart(self):
         size_charts = list(self.data[self.result_key].values())

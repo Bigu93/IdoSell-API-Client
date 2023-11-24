@@ -11,4 +11,5 @@ class SKUClient(BaseClient):
             f"api/admin/v1/products/SKUbyBarcode?productIndices={product_id}"
         )
         parser = SkuJSON(response)
-        return parser.parse()
+        parser.parse()
+        return parser

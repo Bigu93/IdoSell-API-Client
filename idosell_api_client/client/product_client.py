@@ -10,7 +10,8 @@ class ProductClient(BaseClient):
         self._validate_product_id(product_id)
         response = self.get(f"api/admin/v1/products/products?productIds={product_id}")
         parser = ProductJSON(response, lang_ids)
-        return parser.parse()
+        parser.parse()
+        return parser
 
     def add_product(self, product_data):
         # TODO - implement product data validation

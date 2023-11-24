@@ -1,3 +1,6 @@
+import json
+
+
 def error_check(func):
     def wrapper(self, *args, **kwargs):
         if self.has_error:
@@ -11,8 +14,30 @@ class BaseJSON:
     def __init__(self, json_data, result_key="results"):
         self.data = json_data
         self.result_key = result_key
-        self.has_error = False  # Instance variable to track if an error occurred
+        self.has_error = False
         self.error_message = self.check_for_errors()
+
+    def show(self, *keys):
+        if not hasattr(self, "parsed_data"):
+            raise ValueError("Data has not been parsed yet.")
+
+        if keys:
+            selected_data = {key: self.parsed_data.get(key) for key in keys}
+        else:
+            selected_data = self.parsed_data
+
+        return json.dumps(selected_data, indent=4, ensure_ascii=False)
+
+    def to_dict(self, *keys):
+        if not hasattr(self, "parsed_data"):
+            raise ValueError("Data has not been parsed yet.")
+
+        if keys:
+            selected_data = {key: self.parsed_data.get(key) for key in keys}
+        else:
+            selected_data = self.parsed_data
+
+        return selected_data
 
     def check_for_errors(self):
         error_info = self.data.get("errors", {})

@@ -21,7 +21,7 @@ class ProductJSON(BaseJSON):
 
     @error_check
     def parse(self):
-        data = {
+        self.parsed_data = {
             "error": False,
             "product_id": self.product_id,
             "displayed_code": self.displayed_code,
@@ -34,7 +34,7 @@ class ProductJSON(BaseJSON):
             "descriptions": self.descriptions,
         }
 
-        return json.dumps(data, indent=4)
+        return self.parsed_data
 
     @staticmethod
     def _validate_lang_ids(lang_ids):

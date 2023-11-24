@@ -10,5 +10,6 @@ class SizeChartClient(BaseClient):
         response = self.get(
             f"api/admin/v1/sizecharts/sizecharts?names={size_chart_name}"
         )
-        parser = SizeChartJSON(response)
-        return parser.parse(size_chart_name)
+        parser = SizeChartJSON(response, size_chart_name)
+        parser.parse()
+        return parser
