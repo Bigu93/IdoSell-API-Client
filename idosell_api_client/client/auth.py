@@ -2,7 +2,7 @@ import requests
 import time
 import base64
 from logs.logger import get_logger
-from exceptions.api_exceptions import APIError
+from exceptions.api_exceptions import IdoSellApiException
 
 
 class Auth:
@@ -37,7 +37,7 @@ class Auth:
 
     def authenticate(self):
         try:
-            url = f"{self.base_url}/api/authorize/1/authorize/accessToken"
+            url = f"https://butosklep.pl/api/authorize/1/authorize/accessToken"
             payload = {"grant_type": "client_credentials", "scope": ["api-pa"]}
             headers = {
                 "accept": "application/json",
@@ -54,6 +54,8 @@ class Auth:
 
         except requests.RequestException as e:
             self.logger.error(f"Error in authentication request: {e}")
-            raise APIError(f"API Error: {e.response.status_code} - {e.response.text}")
+            raise IdoSellApiException(
+                f"API Error: {e.response.status_code} - {e.response.text}"
+            )
             self.access_token = None
             self.token_expires = 0

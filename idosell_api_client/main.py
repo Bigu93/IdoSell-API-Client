@@ -1,7 +1,19 @@
-import json
-from client.product_client import ProductClient
-from client.sku_client import SKUClient
-from client.size_chart_client import SizeChartClient
+from client.base_client import BaseClient
+from models.product import (
+    Authenticate,
+    Errors,
+    ProductAuctionIcon,
+    ProductDescriptionsLangDatum,
+    ProductDiscount,
+    ProductIcon,
+    ProductImage,
+    ProductIndividualDescriptionsDatum,
+    ProductParametersDistinction,
+    ProductSize,
+    URLLangDatum,
+    Result,
+    Product,
+)
 from config.settings import (
     BASE_URL,
     CLIENT_SECRET,
@@ -14,18 +26,83 @@ def main():
     auth = Auth(CLIENT_USERNAME, CLIENT_SECRET, BASE_URL)
     token = auth.get_token()
 
-    product_client = ProductClient(BASE_URL, token)
-    sku_client = SKUClient(BASE_URL, token)
-    size_chart_client = SizeChartClient(BASE_URL, token)
+    idosellapi = BaseClient(BASE_URL, token)
+    payload = {
+        "params": {
+            "returnProducts": "active",
+            "returnElements": [
+                "code",
+                "note",
+                "category_name",
+                "retail_price",
+                "wholesale_price",
+                "minimal_price",
+                "pos_price",
+                "strikethrough_retail_price",
+                "last_purchase_price",
+                "weight",
+                "complex_notes",
+                "traits",
+                "discount",
+                "icon",
+                "icon_for_auctions",
+                "pictures",
+                "sizeschart_name",
+                "sizes",
+                "new_product",
+                "lang_data",
+                "productIndividualDescriptionsData",
+            ],
+            "productParams": [{"productId": 21000}],
+            "resultsPage": 0,
+            "resultsLimit": 20,
+            "productSearchingLangId": "pol",
+        }
+    }
 
-    print(sku_client.get_product("5905677967777").show())
-    # data = product_client.get_product(["28401-19", "28400-B", "48-B"], ["pol"])
-    # print(data.show("descriptions"))
-    """print(
-        size_chart_client.get_size_chart(
-            "36-23,5/37-24/38-24,5/39-25/40-25,5/41-26"
-        ).show()
-    )"""
+    response = idosellapi.post("products/products/get", data=payload)
+
+    # if "results" in response.data:
+    #     authenticate = Authenticate(**response.data.get("authenticate", {}))
+    #     errors = Errors(**response.data.get("errors", {}))
+    #     product_details = [
+    #         Result(**product_data) for product_data in response.data["results"]
+    #     ]
+
+    #     # Create an instance of the Product class with all the data
+    #     complete_product = Product(
+    #         authenticate=authenticate,
+    #         resultsPage=response.data.get("resultsPage", 0),
+    #         resultsLimit=response.data.get("resultsLimit", 0),
+    #         resultsNumberPage=response.data.get("resultsNumberPage", 0),
+    #         resultsNumberAll=response.data.get("resultsNumberAll", 0),
+    #         errors=errors,
+    #         results=product_details,
+    #     )
+    # else:
+    #     print("No 'results' key found in response.data")
+
+    # Parse the authentication and errors data
+    product_info = []
+    authenticate = Authenticate(**response.data["authenticate"])
+    errors = Errors(**response.data["errors"])
+
+    # Create Result instances for each product in the results array
+    results = [Result(**product_data) for product_data in response.data["results"]]
+
+    # Create the Product instance
+    product = Product(
+        authenticate=authenticate,
+        resultsPage=response.data["resultsPage"],
+        resultsLimit=response.data["resultsLimit"],
+        resultsNumberPage=response.data["resultsNumberPage"],
+        resultsNumberAll=response.data["resultsNumberAll"],
+        errors=errors,
+        results=results,
+    )
+
+    product_info.append(product)
+    print(product_info[0].resultsPage)
 
 
 if __name__ == "__main__":
