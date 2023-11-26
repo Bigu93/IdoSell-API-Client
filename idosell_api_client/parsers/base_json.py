@@ -17,27 +17,35 @@ class BaseJSON:
         self.has_error = False
         self.error_message = self.check_for_errors()
 
-    def show(self, *keys):
-        if not hasattr(self, "parsed_data"):
-            raise ValueError("Data has not been parsed yet.")
-
-        if keys:
-            selected_data = {key: self.parsed_data.get(key) for key in keys}
-        else:
-            selected_data = self.parsed_data
-
+    @error_check
+    def show(self, *keys, product_index=None):
+        selected_data = self._select_nested_data(*keys, product_index=product_index)
         return json.dumps(selected_data, indent=4, ensure_ascii=False)
 
-    def to_dict(self, *keys):
+    @error_check
+    def to_dict(self, *keys, product_index=None):
+        return self._select_nested_data(*keys, product_index=product_index)
+
+    def _select_nested_data(self, *keys, product_index=None):
         if not hasattr(self, "parsed_data"):
             raise ValueError("Data has not been parsed yet.")
 
-        if keys:
-            selected_data = {key: self.parsed_data.get(key) for key in keys}
-        else:
-            selected_data = self.parsed_data
+        if "products" in self.parsed_data:
+            if product_index is not None:
+                # Extract data for a specific product
+                return self._extract_data_from_product(
+                    self.parsed_data["products"], keys, product_index
+                )
 
-        return selected_data
+            # Extract data for all products
+            return [
+                self._extract_data_from_product(
+                    self.parsed_data["products"], keys, index
+                )
+                for index in range(len(self.parsed_data["products"]))
+            ]
+
+        return self._extract_data(self.parsed_data, keys)
 
     def check_for_errors(self):
         error_info = self.data.get("errors", {})
@@ -60,3 +68,21 @@ class BaseJSON:
 
     def parse(self):
         raise NotImplementedError("This method should be implemented in a subclass")
+
+    def get_path(self):
+        raise NotImplementedError("This method should be implemented in a subclass")
+
+    @staticmethod
+    def _extract_data_from_product(products, keys, index):
+        if index >= len(products):
+            raise IndexError("Product index out of range.")
+
+        product_data = products[index]
+        return BaseJSON._extract_data(product_data, keys)
+
+    @staticmethod
+    def _extract_data(data, keys):
+        if not keys:
+            return data
+
+        return {key: data.get(key) for key in keys if key in data}

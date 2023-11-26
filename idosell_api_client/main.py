@@ -18,19 +18,14 @@ def main():
     sku_client = SKUClient(BASE_URL, token)
     size_chart_client = SizeChartClient(BASE_URL, token)
 
-    print(sku_client.get_product("28401-F").show("locations"))
-    """
-    print(
-        product_client.get_product("28801-B", ["pol", "spa"]).show(
-            "product_id", "displayed_code"
-        )
-    )
-    print(
+    print(sku_client.get_product("5905677967777").show())
+    # data = product_client.get_product(["28401-19", "28400-B", "48-B"], ["pol"])
+    # print(data.show("descriptions"))
+    """print(
         size_chart_client.get_size_chart(
             "36-23,5/37-24/38-24,5/39-25/40-25,5/41-26"
-        ).to_dict("size_chart_name")
-    )
-    """
+        ).show()
+    )"""
 
 
 if __name__ == "__main__":

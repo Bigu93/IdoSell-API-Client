@@ -7,9 +7,11 @@ class SkuJSON(BaseJSON):
     def __init__(self, json_data):
         super().__init__(json_data)
         if not self.has_error:
+            self.path = self.get_path()
             self.product_id = self._get_product_id()
             self.name = self._get_name()
             self.size = self._get_size()
+            self.size_id = self._get_size_id()
             self.code = self._get_producer_code()
             self.weight = self._get_weight()
             self.locations = self._get_stock_locations()
@@ -27,6 +29,7 @@ class SkuJSON(BaseJSON):
             "id": self.product_id,
             "name": self.name,
             "size": self.size,
+            "size_id": self.size_id,
             "code": self.code,
             "weight": self.weight,
             "locations": self.locations,
@@ -37,20 +40,26 @@ class SkuJSON(BaseJSON):
         }
         return self.parsed_data
 
+    def get_path(self):
+        return self.data["results"][0]["productSkuList"][0]
+
     def _get_product_id(self):
-        return self.data["results"][0]["productSkuList"][0].get("productId")
+        return self.path.get("productId")
 
     def _get_name(self):
-        return self.data["results"][0]["productSkuList"][0].get("productName")
+        return self.path.get("productName")
 
     def _get_size(self):
-        return self.data["results"][0]["productSkuList"][0].get("sizeName")
+        return self.path.get("sizeName")
+
+    def _get_size_id(self):
+        return self.path.get("sizeId")
 
     def _get_producer_code(self):
-        return self.data["results"][0]["productSkuList"][0].get("codeProducer")
+        return self.path.get("codeProducer")
 
     def _get_weight(self):
-        weight = self.data["results"][0]["productSkuList"][0].get("weight")
+        weight = self.path.get("weight")
         if weight != 0 or weight is not None:
             weight_kg = "{:.1f}".format(weight / 1000)
         return [
@@ -60,7 +69,7 @@ class SkuJSON(BaseJSON):
 
     def _get_stock_quantities(self):
         quantities = []
-        for item in self.data["results"][0]["productSkuList"][0].get("quantities", []):
+        for item in self.path.get("quantities", []):
             stock_id = item.get("stockId")
             quantity = item.get("quantity")
             stock_name = STOCK_IDS.get(str(stock_id), "Nieznany")
@@ -69,9 +78,7 @@ class SkuJSON(BaseJSON):
 
     def _get_stock_locations(self):
         locations = []
-        for item in self.data["results"][0]["productSkuList"][0].get(
-            "stockLocations", []
-        ):
+        for item in self.path.get("stockLocations", []):
             stock_id = item.get("stockId")
             stock_location_id = item.get("stockLocationId")
             stock_location_text = parse_location(item.get("stockLocationTextId"))
@@ -86,21 +93,16 @@ class SkuJSON(BaseJSON):
         return locations
 
     def _get_producer_name(self):
-        return self.data["results"][0]["productSkuList"][0].get("producerName")
+        return self.path.get("producerName")
 
     def _get_product_note(self):
-        return self.data["results"][0]["productSkuList"][0].get("productNote")
+        return self.path.get("productNote")
 
     def _get_product_icons(self):
         return {
-            "small": self.data["results"][0]["productSkuList"][0]["productIcon"][
-                "productIconSmallUrl"
-            ],
-            "large": self.data["results"][0]["productSkuList"][0]["productIcon"][
-                "productIconLargeUrl"
-            ],
+            "small": self.path["productIcon"]["productIconSmallUrl"],
+            "large": self.path["productIcon"]["productIconLargeUrl"],
         }
 
-    def _get_data(self):
-        # Implement SKU-specific data retrieval logic
-        pass
+    def _get_iai_barcode(self):
+        return self.path.get("codeIaiBarcodes")[1].get("barcodeType")

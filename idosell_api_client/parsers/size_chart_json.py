@@ -6,6 +6,7 @@ class SizeChartJSON(BaseJSON):
     def __init__(self, json_data, name):
         super().__init__(json_data, result_key="sizeCharts")
         self.name = name
+        self.path = self.get_path()
 
     @error_check
     def parse(self):
@@ -26,6 +27,9 @@ class SizeChartJSON(BaseJSON):
             }
 
         return self.parsed_data
+
+    def get_path(self):
+        pass
 
     def _get_size_chart(self):
         size_charts = list(self.data[self.result_key].values())
