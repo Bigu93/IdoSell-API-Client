@@ -10,8 +10,8 @@ class Authenticate:
 
 class Errors:
     def __init__(self, faultCode: int, faultString: str) -> None:
-        self.faultCode = faultCode
-        self.faultString = faultString
+        self.fault_code = faultCode
+        self.fault_string = faultString
 
 
 class ProductAuctionIcon:
@@ -45,33 +45,33 @@ class ProductAuctionIcon:
         productAuctionIconLargeHeight: int,
         productAuctionIconHash: str,
     ) -> None:
-        self.iconsmall = iconsmall
-        self.iconmini = iconmini
-        self.iconsecond = iconsecond
-        self.dateAdd = dateAdd
+        self.icon_small = iconsmall
+        self.icon_mini = iconmini
+        self.icon_second = iconsecond
+        self.date_add = dateAdd
         self.size = size
-        self.sizesecond = sizesecond
+        self.size_second = sizesecond
         self.exto = exto
         self.ext = ext
         self.exts = exts
-        self.extsecond = extsecond
-        self.extssecond = extssecond
+        self.ext_second = extsecond
+        self.exts_second = extssecond
         self.extm = extm
-        self.urlvaro = urlvaro
-        self.urlvar = urlvar
-        self.urlvars = urlvars
-        self.urlvarsecond = urlvarsecond
-        self.urlvarssecond = urlvarssecond
-        self.iconsmallsecond = iconsmallsecond
-        self.sizesmall = sizesmall
-        self.sizesmallsecond = sizesmallsecond
-        self.productAuctionIconExists = productAuctionIconExists
-        self.productAuctionIconLargeSize = productAuctionIconLargeSize
-        self.productAuctionIconSmallUrl = productAuctionIconSmallUrl
-        self.productAuctionIconLargeUrl = productAuctionIconLargeUrl
-        self.productAuctionIconLargeWidth = productAuctionIconLargeWidth
-        self.productAuctionIconLargeHeight = productAuctionIconLargeHeight
-        self.productAuctionIconHash = productAuctionIconHash
+        self.url_varo = urlvaro
+        self.url_var = urlvar
+        self.url_vars = urlvars
+        self.url_var_second = urlvarsecond
+        self.url_vars_second = urlvarssecond
+        self.icon_small_second = iconsmallsecond
+        self.size_small = sizesmall
+        self.size_small_second = sizesmallsecond
+        self.product_auction_icon_exists = productAuctionIconExists
+        self.product_auction_icon_large_size = productAuctionIconLargeSize
+        self.product_auction_icon_small_url = productAuctionIconSmallUrl
+        self.product_auction_icon_large_url = productAuctionIconLargeUrl
+        self.product_auction_icon_large_width = productAuctionIconLargeWidth
+        self.product_auction_icon_large_height = productAuctionIconLargeHeight
+        self.product_auction_icon_hash = productAuctionIconHash
 
 
 class ProductDescriptionsLangDatum:
@@ -88,21 +88,21 @@ class ProductDescriptionsLangDatum:
         productMetaDescription: str,
         productMetaKeywords: str,
     ) -> None:
-        self.langId = langId
-        self.productName = productName
-        self.productAuctionName = productAuctionName
-        self.productPriceComparisonSitesName = productPriceComparisonSitesName
-        self.productDescription = productDescription
-        self.productLongDescription = productLongDescription
-        self.productAuctionLongDescription = productAuctionLongDescription
-        self.productMetaTitle = productMetaTitle
-        self.productMetaDescription = productMetaDescription
-        self.productMetaKeywords = productMetaKeywords
+        self.lang_id = langId
+        self.product_name = productName
+        self.product_auction_name = productAuctionName
+        self.product_price_comparison_sites_name = productPriceComparisonSitesName
+        self.product_description = productDescription
+        self.product_long_description = productLongDescription
+        self.product_auction_long_description = productAuctionLongDescription
+        self.product_meta_title = productMetaTitle
+        self.product_meta_description = productMetaDescription
+        self.product_meta_keywords = productMetaKeywords
 
 
 class ProductDiscount:
     def __init__(self, promoteItemEnabled: str) -> None:
-        self.promoteItemEnabled = promoteItemEnabled
+        self.promote_item_enabled = promoteItemEnabled
 
 
 class ProductIcon:
@@ -121,18 +121,18 @@ class ProductIcon:
         productIconLargeSize: str,
         productIconHash: str,
     ) -> None:
-        self.iconlargedate = iconlargedate
-        self.iconsmallwidth = iconsmallwidth
-        self.iconsmallheight = iconsmallheight
-        self.iconsmallsize = iconsmallsize
-        self.iconsmalldate = iconsmalldate
-        self.productIconExists = productIconExists
-        self.productIconSmallUrl = productIconSmallUrl
-        self.productIconLargeUrl = productIconLargeUrl
-        self.productIconLargeWidth = productIconLargeWidth
-        self.productIconLargeHeight = productIconLargeHeight
-        self.productIconLargeSize = productIconLargeSize
-        self.productIconHash = productIconHash
+        self.icon_large_date = iconlargedate
+        self.icon_small_width = iconsmallwidth
+        self.icon_small_height = iconsmallheight
+        self.icon_small_size = iconsmallsize
+        self.icon_small_date = iconsmalldate
+        self.product_icon_Exists = productIconExists
+        self.product_icon_small_url = productIconSmallUrl
+        self.product_icon_large_url = productIconLargeUrl
+        self.product_icon_large_width = productIconLargeWidth
+        self.product_icon_large_height = productIconLargeHeight
+        self.product_icon_large_size = productIconLargeSize
+        self.product_icon_hash = productIconHash
 
 
 class ProductImage:
@@ -149,16 +149,16 @@ class ProductImage:
         productImagePriority: Optional[str],
         productImageHash: str,
     ) -> None:
-        self.productImageLargeUrl = productImageLargeUrl
-        self.productImageMediumUrl = productImageMediumUrl
-        self.productImageSmallUrl = productImageSmallUrl
-        self.productImageId = productImageId
-        self.productImageWidth = productImageWidth
-        self.productImageHeight = productImageHeight
-        self.productImageSize = productImageSize
-        self.productImageDate = productImageDate
-        self.productImagePriority = productImagePriority
-        self.productImageHash = productImageHash
+        self.product_image_large_url = productImageLargeUrl
+        self.product_image_medium_url = productImageMediumUrl
+        self.product_image_small_url = productImageSmallUrl
+        self.product_image_id = productImageId
+        self.product_image_width = productImageWidth
+        self.product_image_height = productImageHeight
+        self.product_image_size = productImageSize
+        self.product_image_date = productImageDate
+        self.product_image_priority = productImagePriority
+        self.product_image_hash = productImageHash
 
 
 class ProductIndividualDescriptionsDatum:
@@ -170,11 +170,11 @@ class ProductIndividualDescriptionsDatum:
         productDescription: str,
         productLongDescription: str,
     ) -> None:
-        self.shopId = shopId
-        self.langId = langId
-        self.productName = productName
-        self.productDescription = productDescription
-        self.productLongDescription = productLongDescription
+        self.shop_id = shopId
+        self.lang_dd = langId
+        self.product_name = productName
+        self.product_description = productDescription
+        self.product_longDescription = productLongDescription
 
 
 class ProductParametersDistinction:
@@ -185,23 +185,23 @@ class ProductParametersDistinction:
         parameterValueId: int,
         parameterValueName: str,
     ) -> None:
-        self.parameterId = parameterId
-        self.parameterName = parameterName
-        self.parameterValueId = parameterValueId
-        self.parameterValueName = parameterValueName
+        self.parameter_id = parameterId
+        self.parameter_name = parameterName
+        self.parameter_value_id = parameterValueId
+        self.parameter_value_name = parameterValueName
 
 
 class ProductSize:
     def __init__(self, sizeId: str, sizePanelName: int) -> None:
-        self.sizeId = sizeId
-        self.sizePanelName = sizePanelName
+        self.size_id = sizeId
+        self.size_panel_name = sizePanelName
 
 
 class URLLangDatum:
     def __init__(self, url: str, langid: str, shopId: Optional[int]) -> None:
         self.url = url
-        self.langid = langid
-        self.shopid = shopId
+        self.lang_id = langid
+        self.shop_id = shopId
 
 
 class Result:
@@ -233,33 +233,35 @@ class Result:
         productParametersDistinction: List[ProductParametersDistinction],
         productDiscount: ProductDiscount,
         productSizes: List[ProductSize],
+        **kwargs,
     ) -> None:
         self.url_lang_data = url_lang_data
-        self.productIndividualDescriptionsData = productIndividualDescriptionsData
-        self.sizeschart = sizeschart
+        self.product_individual_descriptions_data = productIndividualDescriptionsData
+        self.sizes_chart = sizeschart
         self.last_purchase_price = last_purchase_price
-        self.productId = productId
-        self.productDescriptionsLangData = productDescriptionsLangData
-        self.productDisplayedCode = productDisplayedCode
-        self.productNote = productNote
-        self.sizeChartId = sizeChartId
-        self.sizeChartName = sizeChartName
-        self.categoryName = categoryName
-        self.productIcon = productIcon
-        self.productAuctionIcon = productAuctionIcon
-        self.productImages = productImages
-        self.productInNew = productInNew
-        self.productRetailPrice = productRetailPrice
-        self.productWholesalePrice = productWholesalePrice
-        self.productMinimalPrice = productMinimalPrice
-        self.productPosPrice = productPosPrice
-        self.productStrikethroughRetailPrice = productStrikethroughRetailPrice
-        self.productPurchasePriceGrossLast = productPurchasePriceGrossLast
-        self.productWeight = productWeight
-        self.productComplexNotes = productComplexNotes
-        self.productParametersDistinction = productParametersDistinction
-        self.productDiscount = productDiscount
-        self.productSizes = productSizes
+        self.product_id = productId
+        self.product_descriptions_lang_data = productDescriptionsLangData
+        self.product_displayed_code = productDisplayedCode
+        self.product_note = productNote
+        self.size_chart_id = sizeChartId
+        self.size_chart_name = sizeChartName
+        self.category_came = categoryName
+        self.product_icon = productIcon
+        self.product_auction_icon = productAuctionIcon
+        self.product_images = productImages
+        self.product_in_new = productInNew
+        self.product_retail_price = productRetailPrice
+        self.product_wholesale_price = productWholesalePrice
+        self.product_minimal_price = productMinimalPrice
+        self.product_pos_price = productPosPrice
+        self.product_strikethrough_retail_price = productStrikethroughRetailPrice
+        self.product_purchase_price_gross_last = productPurchasePriceGrossLast
+        self.product_weight = productWeight
+        self.product_complex_notes = productComplexNotes
+        self.product_parameters_distinction = productParametersDistinction
+        self.product_discount = productDiscount
+        self.product_sizes = productSizes
+        self.__dict__.update(kwargs)
 
 
 class Product:
@@ -275,10 +277,10 @@ class Product:
         **kwargs,
     ) -> None:
         self.authenticate = authenticate
-        self.resultsPage = resultsPage
-        self.resultsLimit = resultsLimit
-        self.resultsNumberPage = resultsNumberPage
-        self.resultsNumberAll = resultsNumberAll
+        self.results_page = resultsPage
+        self.results_limit = resultsLimit
+        self.results_number_page = resultsNumberPage
+        self.results_number_all = resultsNumberAll
         self.errors = errors
         self.results = results
         self.__dict__.update(kwargs)

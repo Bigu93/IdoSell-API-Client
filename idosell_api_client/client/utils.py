@@ -1,13 +1,44 @@
-def parse_location(string):
-    if string == "" or len(string) > 25 or not isinstance(string, str):
-        return {"error": True, "message": "Invalid location string"}
+from typing import List, Dict
 
-    count = string.count("\\")
-    strings_list = string.split("\\", count)
 
-    num_location = strings_list[-1]
-    level_location = strings_list[-3]
+def create_payload(product_ids: List[Dict] = None, lang_id: str = None) -> Dict:
+    payload = {
+        "params": {
+            "returnProducts": "active",
+            "returnElements": [
+                "code",
+                "note",
+                "category_name",
+                "retail_price",
+                "wholesale_price",
+                "minimal_price",
+                "pos_price",
+                "strikethrough_retail_price",
+                "last_purchase_price",
+                "weight",
+                "complex_notes",
+                "traits",
+                "discount",
+                "icon",
+                "icon_for_auctions",
+                "pictures",
+                "sizeschart_name",
+                "sizes",
+                "new_product",
+                "lang_data",
+                "productIndividualDescriptionsData",
+            ],
+            "resultsPage": 0,
+            "resultsLimit": 20,
+        }
+    }
 
-    data = {"level": level_location, "position": num_location}
+    if product_ids:
+        payload["params"]["productParams"] = [
+            {"productId": p_id} for p_id in product_ids
+        ]
 
-    return data
+    if lang_id:
+        payload["params"]["productSearchingLangId"] = lang_id
+
+    return payload

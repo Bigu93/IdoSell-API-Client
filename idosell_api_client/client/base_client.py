@@ -4,7 +4,7 @@ import logging
 from typing import List, Dict
 from exceptions.api_exceptions import IdoSellApiException
 from json import JSONDecodeError
-from models.result import Result
+from models.response import Response
 
 DEFAULT_TIMEOUT = 10  # seconds
 
@@ -33,26 +33,28 @@ class BaseClient:
         if not ssl_verify:
             requests.packages.urllib3.disable_warnings()
 
-    def get(self, endpoint: str, ep_params: Dict = None) -> Result:
+    def get(self, endpoint: str, ep_params: Dict = None) -> Response:
         return self._send_request(
             http_method="GET", endpoint=endpoint, ep_params=ep_params
         )
 
-    def post(self, endpoint: str, ep_params: Dict = None, data: Dict = None) -> Result:
+    def post(
+        self, endpoint: str, ep_params: Dict = None, data: Dict = None
+    ) -> Response:
         return self._send_request(
             http_method="POST", endpoint=endpoint, ep_params=ep_params, data=data
         )
 
     def delete(
         self, endpoint: str, ep_params: Dict = None, data: Dict = None
-    ) -> Result:
+    ) -> Response:
         return self._send_request(
             http_method="DELETE", endpoint=endpoint, ep_params=ep_params, data=data
         )
 
     def _send_request(
         self, http_method: str, endpoint: str, ep_params: Dict = None, data: Dict = None
-    ) -> Result:
+    ) -> Response:
         full_url = self.url + endpoint
         headers = {"Authorization": f"Bearer {self.auth_token}"}
 
@@ -60,6 +62,7 @@ class BaseClient:
         log_line_post = ", ".join(
             (log_line_pre, "success={}, status_code={}, message={}")
         )
+
         try:
             self._logger.debug(msg=log_line_pre)
             response = requests.request(
@@ -80,12 +83,16 @@ class BaseClient:
         except (ValueError, JSONDecodeError) as e:
             self._logger.error(msg=log_line_post.format(False, None, e))
             raise IdoSellApiException("Bad JSON in response") from e
+
         is_success = response.status_code == 200
         log_line = log_line_post.format(
             is_success, response.status_code, response.reason
         )
+
         if is_success:
             self._logger.debug(msg=log_line)
-            return Result(response.status_code, message=response.reason, data=data_out)
+            return Response(
+                response.status_code, message=response.reason, data=data_out
+            )
         self._logger.error(msg=log_line)
         raise IdoSellApiException(f"{response.status_code}: {response.reason}")

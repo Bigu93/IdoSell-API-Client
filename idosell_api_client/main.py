@@ -1,88 +1,31 @@
 from client.base_client import BaseClient
-from models.product import (
-    Authenticate,
-    Errors,
-    ProductAuctionIcon,
-    ProductDescriptionsLangDatum,
-    ProductDiscount,
-    ProductIcon,
-    ProductImage,
-    ProductIndividualDescriptionsDatum,
-    ProductParametersDistinction,
-    ProductSize,
-    URLLangDatum,
-    Result,
-    Product,
-)
+from client.product_api import ProductApi
+from models.response import process_response
 from config.settings import (
     BASE_URL,
     CLIENT_SECRET,
     CLIENT_USERNAME,
 )
 from client.auth import Auth
+from client.utils import create_payload
 
 
 def main():
     auth = Auth(CLIENT_USERNAME, CLIENT_SECRET, BASE_URL)
     token = auth.get_token()
 
-    idosellapi = BaseClient(BASE_URL, token)
-    payload = {
-        "params": {
-            "returnProducts": "active",
-            "returnElements": [
-                "code",
-                "note",
-                "category_name",
-                "retail_price",
-                "wholesale_price",
-                "minimal_price",
-                "pos_price",
-                "strikethrough_retail_price",
-                "last_purchase_price",
-                "weight",
-                "complex_notes",
-                "traits",
-                "discount",
-                "icon",
-                "icon_for_auctions",
-                "pictures",
-                "sizeschart_name",
-                "sizes",
-                "new_product",
-                "lang_data",
-                "productIndividualDescriptionsData",
-            ],
-            "productParams": [{"productId": 21000}],
-            "resultsPage": 0,
-            "resultsLimit": 20,
-            "productSearchingLangId": "pol",
-        }
-    }
+    products = ProductApi(BASE_URL, token)
 
-    response = idosellapi.post("products/products/get", data=payload)
+    product_ids = [21000, 21001, 21002, 28676]
+    lang_id = "pol"
 
-    # Parse the authentication and errors data
-    product_info = []
-    authenticate = Authenticate(**response.data["authenticate"])
-    errors = Errors(**response.data["errors"])
+    payload = create_payload(product_ids, lang_id)
+    response = products.get_products(payload)
+    processed_response = process_response(response.data)
 
-    # Create Result instances for each product in the results array
-    results = [Result(**product_data) for product_data in response.data["results"]]
-
-    # Create the Product instance
-    product = Product(
-        authenticate=authenticate,
-        resultsPage=response.data["resultsPage"],
-        resultsLimit=response.data["resultsLimit"],
-        resultsNumberPage=response.data["resultsNumberPage"],
-        resultsNumberAll=response.data["resultsNumberAll"],
-        errors=errors,
-        results=results,
-    )
-
-    product_info.append(product)
-    print(product_info[0].resultsNumberAll)
+    product_info = [processed_response]
+    for product in product_info[0].results:
+        print(product.product_id)
 
 
 if __name__ == "__main__":
