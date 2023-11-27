@@ -62,26 +62,6 @@ def main():
 
     response = idosellapi.post("products/products/get", data=payload)
 
-    # if "results" in response.data:
-    #     authenticate = Authenticate(**response.data.get("authenticate", {}))
-    #     errors = Errors(**response.data.get("errors", {}))
-    #     product_details = [
-    #         Result(**product_data) for product_data in response.data["results"]
-    #     ]
-
-    #     # Create an instance of the Product class with all the data
-    #     complete_product = Product(
-    #         authenticate=authenticate,
-    #         resultsPage=response.data.get("resultsPage", 0),
-    #         resultsLimit=response.data.get("resultsLimit", 0),
-    #         resultsNumberPage=response.data.get("resultsNumberPage", 0),
-    #         resultsNumberAll=response.data.get("resultsNumberAll", 0),
-    #         errors=errors,
-    #         results=product_details,
-    #     )
-    # else:
-    #     print("No 'results' key found in response.data")
-
     # Parse the authentication and errors data
     product_info = []
     authenticate = Authenticate(**response.data["authenticate"])
@@ -102,7 +82,7 @@ def main():
     )
 
     product_info.append(product)
-    print(product_info[0].resultsPage)
+    print(product_info[0].resultsNumberAll)
 
 
 if __name__ == "__main__":
