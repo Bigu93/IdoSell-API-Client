@@ -1,7 +1,6 @@
 import requests
 import requests.packages
 import logging
-from typing import List, Dict
 from exceptions.api_exceptions import IdoSellApiException
 from json import JSONDecodeError
 from models.response import Response
@@ -33,27 +32,31 @@ class BaseClient:
         if not ssl_verify:
             requests.packages.urllib3.disable_warnings()
 
-    def get(self, endpoint: str, ep_params: Dict = None) -> Response:
+    def get(self, endpoint: str, ep_params: dict = None) -> Response:
         return self._send_request(
             http_method="GET", endpoint=endpoint, ep_params=ep_params
         )
 
     def post(
-        self, endpoint: str, ep_params: Dict = None, data: Dict = None
+        self, endpoint: str, ep_params: dict = None, data: dict = None
     ) -> Response:
         return self._send_request(
             http_method="POST", endpoint=endpoint, ep_params=ep_params, data=data
         )
 
     def delete(
-        self, endpoint: str, ep_params: Dict = None, data: Dict = None
+        self, endpoint: str, ep_params: dict = None, data: dict = None
     ) -> Response:
         return self._send_request(
             http_method="DELETE", endpoint=endpoint, ep_params=ep_params, data=data
         )
 
     def _send_request(
-        self, http_method: str, endpoint: str, ep_params: Dict = None, data: Dict = None
+        self,
+        http_method: str,
+        endpoint: str,
+        ep_params: dict = None,
+        data: dict = None,
     ) -> Response:
         full_url = self.url + endpoint
         headers = {"Authorization": f"Bearer {self.auth_token}"}

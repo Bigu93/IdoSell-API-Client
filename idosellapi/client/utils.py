@@ -1,8 +1,4 @@
-from typing import List, Dict
-from models.product import Product
-
-
-def create_payload(product_ids: List[Dict] = None, lang_id: str = None) -> Dict:
+def create_payload(product_ids: list[dict] = None, lang_id: str = None) -> dict:
     payload = {
         "params": {
             "returnProducts": "active",

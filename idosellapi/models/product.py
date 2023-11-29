@@ -1,9 +1,8 @@
 from datetime import datetime
-from typing import List, Optional
 
 
 class Authenticate:
-    def __init__(self, system_login: Optional[str], system_key: str) -> None:
+    def __init__(self, system_login: str, system_key: str) -> None:
         self.system_login = system_login
         self.system_key = system_key
 
@@ -19,24 +18,24 @@ class ProductAuctionIcon:
         self,
         icon_small: str,
         icon_mini: str,
-        icon_second: Optional[str],
+        icon_second: str,
         dateAdd: datetime,
         size: str,
-        size_second: Optional[str],
-        ext_o: Optional[str],
-        ext: Optional[str],
-        ext_s: Optional[str],
-        ext_second: Optional[str],
-        ext_s_second: Optional[str],
-        ext_m: Optional[str],
-        url_var_o: Optional[str],
-        url_var: Optional[str],
-        url_var_s: Optional[str],
-        url_var_second: Optional[str],
-        url_var_s_second: Optional[str],
-        icon_small_second: Optional[str],
+        size_second: str,
+        ext_o: str,
+        ext: str,
+        ext_s: str,
+        ext_second: str,
+        ext_s_second: str,
+        ext_m: str,
+        url_var_o: str,
+        url_var: str,
+        url_var_s: str,
+        url_var_second: str,
+        url_var_s_second: str,
+        icon_small_second: str,
         size_small: str,
-        size_small_second: Optional[str],
+        size_small_second: str,
         productAuctionIconExists: str,
         productAuctionIconLargeSize: str,
         productAuctionIconSmallUrl: str,
@@ -146,7 +145,7 @@ class ProductImage:
         productImageHeight: int,
         productImageSize: str,
         productImageDate: datetime,
-        productImagePriority: Optional[str],
+        productImagePriority: str,
         productImageHash: str,
     ) -> None:
         self.product_image_large_url = productImageLargeUrl
@@ -198,7 +197,7 @@ class ProductSize:
 
 
 class URLLangDatum:
-    def __init__(self, url: str, lang_id: str, shop_id: Optional[int]) -> None:
+    def __init__(self, url: str, lang_id: str, shop_id: int) -> None:
         self.url = url
         self.lang_id = lang_id
         self.shop_id = shop_id
@@ -207,11 +206,11 @@ class URLLangDatum:
 class Result:
     def __init__(
         self,
-        url_lang_data: List[URLLangDatum],
-        productIndividualDescriptionsData: List[ProductIndividualDescriptionsDatum],
+        url_lang_data: list[URLLangDatum],
+        productIndividualDescriptionsData: list[ProductIndividualDescriptionsDatum],
         last_purchase_price: str,
         productId: int,
-        productDescriptionsLangData: List[ProductDescriptionsLangDatum],
+        productDescriptionsLangData: list[ProductDescriptionsLangDatum],
         productDisplayedCode: str,
         productNote: str,
         sizeChartId: int,
@@ -219,7 +218,7 @@ class Result:
         categoryName: str,
         productIcon: ProductIcon,
         productAuctionIcon: ProductAuctionIcon,
-        productImages: List[ProductImage],
+        productImages: list[ProductImage],
         productInNew: str,
         productRetailPrice: int,
         productWholesalePrice: int,
@@ -229,9 +228,9 @@ class Result:
         productPurchasePriceGrossLast: str,
         productWeight: int,
         productComplexNotes: int,
-        productParametersDistinction: List[ProductParametersDistinction] = [],
+        productParametersDistinction: list[ProductParametersDistinction] = [],
         productDiscount: ProductDiscount = {},
-        productSizes: List[ProductSize] = [],
+        productSizes: list[ProductSize] = [],
         **kwargs,
     ) -> None:
         self.url_lang_data = [URLLangDatum(**url_data) for url_data in url_lang_data]
@@ -302,7 +301,7 @@ class Product:
         resultsNumberPage: int,
         resultsNumberAll: int,
         errors: Errors,
-        results: List[Result],
+        results: list[Result],
         **kwargs,
     ) -> None:
         self.authenticate = authenticate

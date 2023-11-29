@@ -1,9 +1,8 @@
-from typing import List, Dict
 from .product import Product, Authenticate, Errors, Result
 
 
 class Response:
-    def __init__(self, status_code: int, message: str = "", data: List[Dict] = None):
+    def __init__(self, status_code: int, message: str = "", data: list[dict] = None):
         """
         Result returned from low-level BaseClient class
         :param status_code: Standard HTTP Status code
@@ -15,7 +14,7 @@ class Response:
         self.data = data if data else []
 
 
-def process_response(response_data: Dict) -> Product:
+def process_response(response_data: dict) -> Product:
     """
     Process the response from the API and return a Product object
     :param response_data: Python Dictionary of the response from the API
