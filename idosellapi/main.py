@@ -16,7 +16,7 @@ def main():
 
     products = ProductApi(BASE_URL, token)
 
-    product_ids = [21002, 21003, 23643]
+    product_ids = [21002, 21003, 23643, 25000, 26000, 27000]
     lang_id = "pol"
 
     payload = create_payload(product_ids, lang_id)

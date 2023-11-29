@@ -235,24 +235,38 @@ class Result:
         **kwargs,
     ) -> None:
         self.url_lang_data = [URLLangDatum(**url_data) for url_data in url_lang_data]
-        self.individual_descriptions_data = [
-            ProductIndividualDescriptionsDatum(**individual_data)
-            for individual_data in productIndividualDescriptionsData
-        ]
+        self.individual_descriptions_data = (
+            [
+                ProductIndividualDescriptionsDatum(**individual_data)
+                for individual_data in productIndividualDescriptionsData
+            ]
+            if productIndividualDescriptionsData
+            else []
+        )
         self.last_purchase_price = last_purchase_price
         self.id = productId
-        self.descriptions_lang_data = [
-            ProductDescriptionsLangDatum(**lang_data)
-            for lang_data in productDescriptionsLangData
-        ]
+        self.descriptions_lang_data = (
+            [
+                ProductDescriptionsLangDatum(**lang_data)
+                for lang_data in productDescriptionsLangData
+            ]
+            if productDescriptionsLangData
+            else []
+        )
         self.displayed_code = productDisplayedCode
         self.note = productNote
         self.size_chart_id = sizeChartId
         self.size_chart_name = sizeChartName
         self.category_name = categoryName
-        self.icon = ProductIcon(**productIcon)
-        self.auction_icon = ProductAuctionIcon(**productAuctionIcon)
-        self.images = [ProductImage(**image_data) for image_data in productImages]
+        self.icon = ProductIcon(**productIcon) if productIcon else None
+        self.auction_icon = (
+            ProductAuctionIcon(**productAuctionIcon) if productAuctionIcon else None
+        )
+        self.images = (
+            [ProductImage(**image_data) for image_data in productImages]
+            if productImages
+            else []
+        )
         self.in_new = productInNew
         self.retail_price = productRetailPrice
         self.wholesale_price = productWholesalePrice
@@ -262,12 +276,20 @@ class Result:
         self.purchase_price_gross_last = productPurchasePriceGrossLast
         self.weight = productWeight
         self.complex_notes = productComplexNotes
-        self.parameters_distinction = [
-            ProductParametersDistinction(**param_data)
-            for param_data in productParametersDistinction
-        ]
-        self.discount = ProductDiscount(**productDiscount)
-        self.sizes = [ProductSize(**size_data) for size_data in productSizes]
+        self.parameters_distinction = (
+            [
+                ProductParametersDistinction(**param_data)
+                for param_data in productParametersDistinction
+            ]
+            if productParametersDistinction
+            else []
+        )
+        self.discount = ProductDiscount(**productDiscount) if productDiscount else None
+        self.sizes = (
+            [ProductSize(**size_data) for size_data in productSizes]
+            if productSizes
+            else []
+        )
         self.__dict__.update(kwargs)
 
 
