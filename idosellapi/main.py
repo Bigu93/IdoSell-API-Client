@@ -7,7 +7,7 @@ from config.settings import (
     CLIENT_USERNAME,
 )
 from client.auth import Auth
-from client.utils import create_payload
+from client.utils import create_payload, print_relevant_product_data
 
 
 def main():
@@ -16,7 +16,7 @@ def main():
 
     products = ProductApi(BASE_URL, token)
 
-    product_ids = [21000, 21001, 21002, 28676]
+    product_ids = [21002, 21003, 23643]
     lang_id = "pol"
 
     payload = create_payload(product_ids, lang_id)
@@ -24,8 +24,14 @@ def main():
     processed_response = process_response(response.data)
 
     product_info = [processed_response]
+    attributes_to_print = {
+        "Product ID": "id",
+        "Product Name": "descriptions_lang_data[0].product_name",
+        "Product Price": "retail_price",
+    }
+
     for product in product_info[0].results:
-        print(product.product_id)
+        print_relevant_product_data(product, attributes_to_print)
 
 
 if __name__ == "__main__":
