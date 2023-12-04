@@ -10,10 +10,13 @@
 
 </form>
 <br>
-<h2>Produkty</h2>
+<h2>Dane towaru</h2>
 <div>
-    {% if product_info %}
-        <p>{{ product_info }}</p>
+    {% if product %}
+        <p>ID: {{ product.id }}</p>
+        <p>Nazwa: {{ product.descriptions_lang_data[0].product_name }}</p>
+        <p>Cena: {{ product.retail_price }}</p>
+        <p>Kod: {{ product.displayed_code }}</p>
     {% endif %}
 </div>
 

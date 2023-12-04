@@ -1,9 +1,9 @@
 import requests
 import requests.packages
 import logging
-from exceptions.api_exceptions import IdoSellApiException
+from idosellapi.exceptions.api_exceptions import IdoSellApiException
 from json import JSONDecodeError
-from models.response import Response
+from idosellapi.models.response import Response
 
 DEFAULT_TIMEOUT = 10  # seconds
 

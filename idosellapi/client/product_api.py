@@ -1,7 +1,7 @@
 import logging
-from .base_client import BaseClient
-from exceptions.api_exceptions import IdoSellApiException
-from models.response import Response
+from idosellapi.client.base_client import BaseClient
+from idosellapi.exceptions.api_exceptions import IdoSellApiException
+from idosellapi.models.response import Response
 
 
 class ProductApi:

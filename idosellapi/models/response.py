@@ -1,4 +1,4 @@
-from .product import Product, Authenticate, Errors, Result
+from idosellapi.models.product import Product, Authenticate, Errors, Result
 
 
 class Response:

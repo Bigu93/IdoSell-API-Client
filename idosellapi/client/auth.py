@@ -1,8 +1,8 @@
 import requests
 import time
 import base64
-from logs.logger import get_logger
-from exceptions.api_exceptions import IdoSellApiException
+from idosellapi.logs.logger import get_logger
+from idosellapi.exceptions.api_exceptions import IdoSellApiException
 
 
 class Auth:
