@@ -160,5 +160,6 @@ cython_debug/
 #.idea/
 =======
 venv/
+.vscode/
 idosell_api_client/.env
 idosell_api_client/logs/api.log

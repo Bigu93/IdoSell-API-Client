@@ -2,16 +2,19 @@
 
 {% block content %}
 
-    <form action="/product" method="post">
-        <textarea name="product_id" rows="5" placeholder="Wpisz ID produktu"></textarea>
-        <button type="submit">Pokaż</button>
-    </form>
+<form action="/get-product" method="post">
 
-    <br>
-    <h2>Produkty</h2>
+    <label for="product_id">ID Produktu:</label>
+    <input type="text" id="product_id" name="product_id">
+    <input type="submit" value="Submit">
 
-    <div>
-
-    </div>
+</form>
+<br>
+<h2>Produkty</h2>
+<div>
+    {% if product_info %}
+        <p>{{ product_info }}</p>
+    {% endif %}
+</div>
 
 {% endblock content %}

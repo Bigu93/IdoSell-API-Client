@@ -1,4 +1,5 @@
 import uvicorn
+from idosellapi.product_data import ProductData
 from fastapi import FastAPI, Request, Depends, Form, status
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
@@ -9,30 +10,28 @@ templates = Jinja2Templates(directory="templates")
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+product_data = ProductData()
+
 
 @app.get("/")
 def root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
-@app.post("/product", status_code=status.HTTP_302_FOUND)
-def create_product(request: Request, product_id: str = Form(...)):
-    return RedirectResponse(
-        url=f"/product/{product_id}", status_code=status.HTTP_302_FOUND
+@app.post("/get-product")
+def get_product(request: Request, product_id: int = Form(...)):
+    product_info = product_data.get_product_info(id)
+    return templates.TemplateResponse(
+        "index.html", {"request": request, "product_info": product_info}
     )
 
 
-@app.get("/product/{id}")
-def get_product(id: int):
-    return f"show product with id {id}"
-
-
-@app.put("/product/{id}")
+@app.put("/update-product/{id}")
 def update_product(id: int):
     return "update product with id {id}"
 
 
-@app.delete("/product/{id}")
+@app.delete("/delete-product/{id}")
 def delete_product(id: int):
     return "delete product with id {id}"
 
