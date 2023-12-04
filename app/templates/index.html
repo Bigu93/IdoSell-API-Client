@@ -2,22 +2,28 @@
 
 {% block content %}
 
-<form action="/get-product" method="post">
+<section class="product-form">
+    <form action="/get-product" method="post">
+        <div class="form-group">
+            <label for="product_id">ID Produktu:</label>
+            <input type="text" id="product_id" name="product_id">
+        </div>
+        <input type="submit" value="Submit" class="submit-button">
+    </form>
+</section>
 
-    <label for="product_id">ID Produktu:</label>
-    <input type="text" id="product_id" name="product_id">
-    <input type="submit" value="Submit">
-
-</form>
-<br>
-<h2>Dane towaru</h2>
-<div>
-    {% if product %}
-        <p>ID: {{ product.id }}</p>
-        <p>Nazwa: {{ product.descriptions_lang_data[0].product_name }}</p>
-        <p>Cena: {{ product.retail_price }}</p>
-        <p>Kod: {{ product.displayed_code }}</p>
-    {% endif %}
-</div>
+<section class="product-data">
+    <h2>Dane towaru</h2>
+    <div class="product-info">
+        {% if product %}
+            <p><strong>ID:</strong> {{ product.id }}</p>
+            <p><strong>Nazwa:</strong> {{ product.descriptions_lang_data[0].product_name }}</p>
+            <p><strong>Cena:</strong> {{ product.retail_price }}</p>
+            <p><strong>Kod:</strong> {{ product.displayed_code }}</p>
+        {% else %}
+            <p>Podaj ID towaru, żeby zobaczyć szczegóły.</p>
+        {% endif %}
+    </div>
+</section>
 
 {% endblock content %}

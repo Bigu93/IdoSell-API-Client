@@ -8,12 +8,26 @@
     <link rel="stylesheet" href="{{ url_for('static', path='css/main.css') }}">
 </head>
 <body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1><a href="/">IdoSell App</a></h1>
+            </div>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/#">Nav1</a></li>
+                <li><a href="/#">Nav2</a></li>
+                <li><a href="/#">Nav3</a></li>
+            </ul>
+        </nav>
+    </header>
     <main>
-        <h1>IdoSell App</h1>
-        <br>
         {% block content %}
         
         {% endblock content %}
     </main>
+    <footer>
+        <p>&copy; 2023 IdoSell App</p>
+    </footer>
 </body>
 </html>
