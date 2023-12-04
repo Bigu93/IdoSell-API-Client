@@ -8,20 +8,24 @@
             <label for="product_id">ID Produktu:</label>
             <input type="text" id="product_id" name="product_id">
         </div>
-        <input type="submit" value="Submit" class="submit-button">
+        <input type="submit" value="Zatwierdź" class="submit-button">
     </form>
 </section>
 
 <section class="product-data">
     <h2>Dane towaru</h2>
     <div class="product-info">
-        {% if product %}
+        {% if error %}
+            <p>Error: {{ error }}</p>
+        {% else %}
+            {% if product %}
             <p><strong>ID:</strong> {{ product.id }}</p>
             <p><strong>Nazwa:</strong> {{ product.descriptions_lang_data[0].product_name }}</p>
             <p><strong>Cena:</strong> {{ product.retail_price }}</p>
             <p><strong>Kod:</strong> {{ product.displayed_code }}</p>
-        {% else %}
+            {% else %}
             <p>Podaj ID towaru, żeby zobaczyć szczegóły.</p>
+            {% endif %}
         {% endif %}
     </div>
 </section>

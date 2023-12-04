@@ -1,6 +1,6 @@
-from idosellapi.client.base_client import BaseClient
 from idosellapi.client.product_api import ProductApi
 from idosellapi.models.response import process_response
+from idosellapi.exceptions.api_exceptions import ProductInfoError, NoProductFoundError
 from idosellapi.config.settings import (
     BASE_URL,
     CLIENT_SECRET,
@@ -19,9 +19,16 @@ class ProductData:
     def get_product_info(self, product_id, lang_id="pol"):
         payload = create_payload(product_id, lang_id)
         response = self.products_api.get_products(payload)
-        processed_response = process_response(response.data)
-        product_info = [processed_response]
-        return product_info[0].results[0]
+
+        if response.status_code != 200:
+            raise ProductInfoError("Error while getting product info")
+        if response.data:
+            if response.data["resultsNumberAll"] == 0:
+                raise NoProductFoundError("Brak takiego produktu w bazie")
+
+            processed_response = process_response(response.data)
+            product_info = [processed_response]
+            return product_info[0].results[0]
 
 
 # def main():
