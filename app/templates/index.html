@@ -19,10 +19,10 @@
             <p>Error: {{ error }}</p>
         {% else %}
             {% if product %}
-            <p><strong>ID:</strong> {{ product.id }}</p>
-            <p><strong>Nazwa:</strong> {{ product.descriptions_lang_data[0].product_name }}</p>
-            <p><strong>Cena:</strong> {{ product.retail_price }}</p>
-            <p><strong>Kod:</strong> {{ product.displayed_code }}</p>
+            <p><strong>ID:</strong> {{ product.productId }}</p>
+            <p><strong>Nazwa:</strong> {{ product.productIndividualDescriptionsData[0].productName }}</p>
+            <p><strong>Cena:</strong> {{ product.productRetailPrice }}</p>
+            <p><strong>Kod:</strong> {{ product.productDisplayedCode }}</p>
             {% else %}
             <p>Podaj ID towaru, żeby zobaczyć szczegóły.</p>
             {% endif %}

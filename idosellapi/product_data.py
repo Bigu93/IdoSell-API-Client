@@ -1,5 +1,4 @@
 from idosellapi.client.product_api import ProductApi
-from idosellapi.models.response import process_response
 from idosellapi.exceptions.api_exceptions import ProductInfoError, NoProductFoundError
 from idosellapi.config.settings import (
     BASE_URL,
@@ -7,7 +6,7 @@ from idosellapi.config.settings import (
     CLIENT_USERNAME,
 )
 from idosellapi.client.auth import Auth
-from idosellapi.client.utils import create_payload, print_relevant_product_data
+from idosellapi.client.utils import create_payload
 
 
 class ProductData:
@@ -27,7 +26,7 @@ class ProductData:
                 raise NoProductFoundError("Brak takiego produktu w bazie")
 
             product_info = response.data
-            return product_info.results[0]
+            return product_info["results"][0]
 
 
 # def main():
