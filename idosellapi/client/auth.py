@@ -37,7 +37,7 @@ class Auth:
 
     def authenticate(self):
         try:
-            url = f"https://butosklep.pl/api/authorize/1/authorize/accessToken"
+            url = "https://butosklep.pl/api/authorize/1/authorize/accessToken"
             payload = {"grant_type": "client_credentials", "scope": ["api-pa"]}
             headers = {
                 "accept": "application/json",
