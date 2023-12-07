@@ -14,11 +14,11 @@ class ProductData:
     def __init__(self):
         self.auth = Auth(CLIENT_USERNAME, CLIENT_SECRET, BASE_URL)
         self.token = self.auth.get_token()
-        self.products_api = ProductApi(BASE_URL, self.token)
+        self.products = ProductApi(BASE_URL, self.token)
 
     def get_product_info(self, product_id, lang_id="pol"):
         payload = create_payload(product_id, lang_id)
-        response = self.products_api.get_products(payload)
+        response = self.products.get_products(payload)
 
         if response.status_code != 200:
             raise ProductInfoError("Error while getting product info")
@@ -26,9 +26,8 @@ class ProductData:
             if response.data["resultsNumberAll"] == 0:
                 raise NoProductFoundError("Brak takiego produktu w bazie")
 
-            processed_response = process_response(response.data)
-            product_info = [processed_response]
-            return product_info[0].results[0]
+            product_info = response.data
+            return product_info.results[0]
 
 
 # def main():

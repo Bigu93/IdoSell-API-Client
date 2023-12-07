@@ -12,26 +12,3 @@ class Response:
         self.status_code = int(status_code)
         self.message = str(message)
         self.data = data if data else []
-
-
-def process_response(response_data: dict) -> Product:
-    """
-    Process the response from the API and return a Product object
-    :param response_data: Python Dictionary of the response from the API
-    :return: Product object
-    """
-    authenticate = Authenticate(**response_data["authenticate"])
-    errors = Errors(**response_data["errors"])
-    results = [Result(**product_data) for product_data in response_data["results"]]
-
-    product = Product(
-        authenticate=authenticate,
-        resultsPage=response_data["resultsPage"],
-        resultsLimit=response_data["resultsLimit"],
-        resultsNumberPage=response_data["resultsNumberPage"],
-        resultsNumberAll=response_data["resultsNumberAll"],
-        errors=errors,
-        results=results,
-    )
-
-    return product

@@ -9,7 +9,7 @@ class ProductApi:
         self,
         hostname: str,
         auth_token: str,
-        ver: str = "v1",
+        ver: str,
         ssl_verify: bool = True,
         logger: logging.Logger = None,
     ):
